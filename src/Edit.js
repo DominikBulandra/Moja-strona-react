@@ -3,6 +3,8 @@ import { postsFetched,getAllStatPostsImages } from "./config/actions/index";
 import { connect } from "react-redux";
 import {storage, fire  , base, firestore}  from './config/Fire';
 
+
+
 export class Edit extends Component {
   constructor(props) {
     super(props);
@@ -85,6 +87,17 @@ handleChangeColor(e){
   console.log(e.target.value);
  
 
+}
+delete = (id,name)=>{
+
+ // var desertRef = storage.child('images/1576580858304/images.png');
+  // Delete the file
+  const deleteTask = storage.ref(`/images/${id}/${name}`).delete().then(() => {
+    console.log("plik usuniety");
+  }).catch((error) => {
+   console.log("bład:"+error);
+  });
+  
 }
 update(e){
   e.preventDefault();
@@ -186,7 +199,7 @@ return (
 
 <div>
        {
-            object[0] ==this.state.id && <p><img src={object[1]} style={{width: '150px'}}></img></p>
+            object[0] ==this.state.id && <p><img src={object[1]} style={{width: '150px'}}></img>  <button onClick={() => this.delete(object[0],object[2])} className="btn btn-primary">Usuń</button></p>
        }
     </div>)
 },this)}

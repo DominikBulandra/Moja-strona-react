@@ -67,16 +67,19 @@ export class App extends React.Component {
       result.prefixes.forEach(function(imageRef) {
         //nazwa folderu zawierająca zdjecia
        console.log(imageRef.name);
+       
        var foldername=imageRef.name;
    
         imageRef.list().then(function(result2) {
-         
+        
         result2.items.forEach(function(imageRef2) {
+          var filename=imageRef2.name;
+          
           imageRef2.getDownloadURL().then(function(url) {
 
             console.log(foldername,"url",url);
             //zapisywanie w tablicy adresu url obrazka razem z id posta do ktorego zostal przypisany
-            var array=[foldername,url]
+            var array=[foldername,url,filename]
             temp.push(array);
         });
       });
