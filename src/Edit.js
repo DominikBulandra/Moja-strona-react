@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { postsFetched } from "./config/actions/index";
+import { postsFetched,getAllStatPostsImages } from "./config/actions/index";
 import { connect } from "react-redux";
 import {storage, fire  , base, firestore}  from './config/Fire';
 
@@ -17,7 +17,8 @@ export class Edit extends Component {
         currentUser: null,
         title: this.props.location.title,
         text: this.props.location.text,
-        color:  this.props.location.color
+        color:  this.props.location.color,
+        id: this.props.location.id
       };
 }
 
@@ -40,14 +41,17 @@ componentDidMount(){
 
 }
 onprops(){
-  if (this.props.location.title!=this.state.title){
+  if (this.props.location.id!=this.state.id){
   const title=this.props.location.title;
   const text=this.props.location.text;
+  const id=this.props.location.id;
   const color=this.props.location.color;
   this.setState({ title: title});
+  this.setState({ id: id});
   this.setState({ text: text});
   this.setState({ color: color});
   console.log(this.state.title);
+  console.log(this.props.location.title);
   }
 }
 handleChangeTitle(e){
@@ -88,9 +92,10 @@ update(e){
   const title = this.state.title;
   const text = this.state.text;
   const color = this.state.color;
+  console.log(this.state.id);
   //let userRef = this.firestore.ref('posts/' + this.props.location.id);
   const databaseRef = fire.database().ref('posts/'+this.props.location.id);
-  const uploadTask = storage.ref(`/images/${this.props.location.id}`).put(this.state.file);
+  const uploadTask = storage.ref(`/images/${this.state.id}/${this.state.file.name}`).put(this.state.file);
 // this is to get the stat-cards table from firebase
 const statCardsRef = databaseRef.update({
   
@@ -114,7 +119,8 @@ const statCardsRef = databaseRef.update({
 }
 componentDidUpdate(){
   console.log(this.props.posts);
-  this.onprops();
+  
+ this.onprops();
  }
  _handleImageChange(e){
   e.preventDefault();
@@ -132,7 +138,9 @@ componentDidUpdate(){
   reader.readAsDataURL(file)
 
  };
+
   render() {
+    //this.onprops();
       //wyśietlanie listy projektów
       let {imagePreviewUrl} = this.state;
       let $imagePreview = null;
@@ -142,18 +150,20 @@ componentDidUpdate(){
         $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
       }
       console.log(this.props.location.title);
-     
+     console.log(this.props.images);
       return (<div>
         <h1>Edytuj</h1>
         <form>
+         
         <div className="form-group">
+        {this.state.id}
          <label htmlFor="title">Tytuł</label>
          <input type="textarea"  value={this.state.title} onChange={this.handleChangeTitle.bind(this)} name="title" className="form-control" placeholder="Enter title" />
          <small id="emailHelp" className="form-text ">We'll never share your email with anyone else.</small>
         </div>
          <div className="form-group">
         <label htmlFor="exampleInputPassword1">treść</label>
-        <input value={this.state.text} name="name" onChange={this.handleChangeText.bind(this)} type="textarea" className="form-control" id="exampleInputPassword1" placeholder="Text" />
+        <textarea value={this.state.text} style={{height: '500px'}} name="name" rows="7" onChange={this.handleChangeText.bind(this)} type="textarea" className="form-control" id="exampleInputPassword1" placeholder="Text" ></textarea>
       <input name="color" value={this.state.color} type="color" id="myColor" onChange={this.handleChangeColor.bind(this)} ></input>
         </div>
         <div className="form-group">
@@ -165,10 +175,24 @@ componentDidUpdate(){
         <div className="imgPreview">
           {$imagePreview}
         </div>
+        
+
+      
         <button onClick={this.update} style={{marginLeft: '25px'}} className="btn btn-success">Zmień</button>
    </form>
+   {this.props.images.map(function(object,i){
+
+return (
+
+<div>
+       {
+            object[0] ==this.state.id && <p><img src={object[1]} style={{width: '150px'}}></img></p>
+       }
+    </div>)
+},this)}
    </div>
       )
+   
   }
 }
 
@@ -176,9 +200,10 @@ const mapStateToProps = (state) => {
   
   return {
     
-    posts: state.posts
+    posts: state.posts,
+    images: state.allposts.statPostImages
   }
 };
-const mapDispatchToProps = { postsFetched };
+const mapDispatchToProps = { postsFetched, getAllStatPostsImages };
 
 export const EditContainer = connect(mapStateToProps, mapDispatchToProps)(Edit);

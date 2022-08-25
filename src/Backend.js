@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {fire  , base}  from './config/Fire';
 import {ListContainer} from './list';
 import {AddContainer} from './Add';
-import {Edit} from './Edit';
+import {EditContainer} from './Edit';
 import {
     BrowserRouter as Router,
     Route,
@@ -76,7 +76,7 @@ class Backend extends Component {
             <div className="col-md-6"><ListContainer /></div>
        <div className="col-md-6 ">
            <div className="App">
-           <Route exact path="/admin/edit" component={Edit} />
+           <Route exact path="/admin/edit" component={EditContainer} />
            <Route exact path="/admin" component={AddContainer} />
       </div>
       

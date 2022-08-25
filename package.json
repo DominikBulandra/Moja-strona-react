@@ -40,5 +40,6 @@
   },
   "devDependencies": {
     "redux-devtools": "^3.5.0"
-  }
+  },
+  "homepage": "localhost:8080/build"
 }

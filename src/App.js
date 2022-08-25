@@ -65,15 +65,19 @@ export class App extends React.Component {
     storageRef.list().then(function(result) {
       console.log(result.items);
       result.prefixes.forEach(function(imageRef) {
-        
-       console.log(imageRef);
-        // And finally display them
+        //nazwa folderu zawierająca zdjecia
+       console.log(imageRef.name);
+       var foldername=imageRef.name;
+   
         imageRef.list().then(function(result2) {
          
         result2.items.forEach(function(imageRef2) {
           imageRef2.getDownloadURL().then(function(url) {
-            console.log(url);
-            temp.push(url);
+
+            console.log(foldername,"url",url);
+            //zapisywanie w tablicy adresu url obrazka razem z id posta do ktorego zostal przypisany
+            var array=[foldername,url]
+            temp.push(array);
         });
       });
       });
@@ -88,13 +92,16 @@ export class App extends React.Component {
 
     this.ref2(temp);
 
-        console.log(this.state.ref2);
+        console.log("obraz",this.state.ref2);
    // const storageRef = storage.ref('/images/1576580835000').getDownloadURL();
+
+
+   //zapisywanie do stanu adresów obrazków
     this.props.getAllStatPostsImages(temp);
 
     
     console.log(this.props.posts2);
-    console.log(this.props.images);
+    console.log("Obrazy",this.props.images);
   }
   async sendState(){
     this.postsRef =base.syncState('posts',{
@@ -212,14 +219,12 @@ this.onPush();
       <header className="App-header">
       <ul>
             <li>
-              <Link to="/projects">Projects</Link>
+              <Link to="/projects">Projekty</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/about">o mnie</Link>
             </li>
-            <li>
-              <Link to="/chat">Chat</Link>
-            </li>
+           
             {/* <li>
             <button onClick={this.onSync}>sync</button>
             </li>
@@ -232,7 +237,6 @@ this.onPush();
       </header>
       <Route exact path="/projects" component={ProjectsContainer}/>
       <Route path="/about" component={About} />
-      <Route path="/chat" component={Chat} />
       <Route path="/admin" component={Admin} />
       </Router>
      

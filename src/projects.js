@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { postsFetched,getAllStatPostsImages } from "./config/actions/index";
 import { connect } from "react-redux";
-import Project from './Project';
+import Project, { ProjectContainer } from './Project';
 import {fire  , base, storage}  from './config/Fire';
 let lastScrollY = 0;
 let ticking = false;
@@ -26,9 +26,9 @@ ref2(temp){
 }
 componentDidMount(){
   if (this.props.posts2){
-  this.props.posts2.forEach(function(post){
-    var s=this.onAction(post.id);
-    console.log(s);
+  this.props.posts2.forEach( (post) => {
+    this.onAction(post.id);
+    
   })
   }
 
@@ -71,7 +71,7 @@ componentDidUpdate(){
       console.log(result.items);
       result.items.forEach(function(imageRef) {
         imageRef.getDownloadURL().then(function(url) {
-          console.log(url);
+          console.log( "adres obrazka",url);
           temp.push(url);
           return url;
       });
@@ -89,7 +89,7 @@ componentDidUpdate(){
 
     this.ref2(temp);
 
-        console.log(this.state.ref2);
+        console.log("aktualny",this.state.ref2);
    // const storageRef = storage.ref('/images/1576580835000').getDownloadURL();
     //this.props.getAllStatPostsImages(temp);
 
@@ -115,7 +115,7 @@ componentDidUpdate(){
         //console.log({item});
         //console.log(this.props.images);
         // return <li className="list-group-item list-group-item-action" key={i}><div className="row"><div className="col-md"></div><div className="col-md">{item.title}</div><div className="col-md">{item.text}</div></div></li>
-        return <Project key={item.id}  title={item.title} text={item.text} color={item.color} />
+        return <ProjectContainer key={item.id} id={item.id}  title={item.title} text={item.text} color={item.color} />
       }, this)
     }else
     {
