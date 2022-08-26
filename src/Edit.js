@@ -3,12 +3,13 @@ import { postsFetched,getAllStatPostsImages } from "./config/actions/index";
 import { connect } from "react-redux";
 import {storage, fire  , base, firestore}  from './config/Fire';
 
-
-
+import 'quill/dist/quill.snow.css'; 
+import ReactQuill from 'react-quill';
 export class Edit extends Component {
   constructor(props) {
     super(props);
     this.update = this.update.bind(this);
+    this.handleChangeEditor = this.handleChangeEditor.bind(this);
    
    // this.handleChange = this.handleChange.bind(this);
     this.state = {
@@ -151,8 +152,13 @@ componentDidUpdate(){
   reader.readAsDataURL(file)
 
  };
-
+ handleChangeEditor(editor) {
+  //console.log('background', editor);
+  const text = editor;
+   this.setState({text});
+};
   render() {
+    //const { quill, quillRef } = useQuill();
     //this.onprops();
       //wyśietlanie listy projektów
       let {imagePreviewUrl} = this.state;
@@ -176,7 +182,12 @@ componentDidUpdate(){
         </div>
          <div className="form-group">
         <label htmlFor="exampleInputPassword1">treść</label>
-        <textarea value={this.state.text} style={{height: '500px'}} name="name" rows="7" onChange={this.handleChangeText.bind(this)} type="textarea" className="form-control" id="exampleInputPassword1" placeholder="Text" ></textarea>
+        <div className="form-group">
+   <ReactQuill theme="snow" value={this.state.text} onChange={this.handleChangeEditor} style={{ width: 500, height: 500 }}/>
+   
+    </div>
+    </div>
+    <div className="form-group" style={{ marginTop: '50px' }}>
       <input name="color" value={this.state.color} type="color" id="myColor" onChange={this.handleChangeColor.bind(this)} ></input>
         </div>
         <div className="form-group">
@@ -193,6 +204,7 @@ componentDidUpdate(){
       
         <button onClick={this.update} style={{marginLeft: '25px'}} className="btn btn-success">Zmień</button>
    </form>
+   
    {this.props.images.map(function(object,i){
 
 return (

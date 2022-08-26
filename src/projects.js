@@ -15,12 +15,20 @@ export class Projects extends Component {
         data: ["1","2"],
         posts: [],
         posts2: [],
-        ref2: []
+        ref2: [],
+        licznik: 1
       };
 }
 ref2(temp){
   this.setState({
     ref2: temp
+    
+});
+
+}
+licznik(temp){
+  this.setState({
+    licznik: temp
     
 });
 }
@@ -115,8 +123,11 @@ componentDidUpdate(){
         //console.log({item});
         //console.log(this.props.images);
         // return <li className="list-group-item list-group-item-action" key={i}><div className="row"><div className="col-md"></div><div className="col-md">{item.title}</div><div className="col-md">{item.text}</div></div></li>
-        return <ProjectContainer key={item.id} id={item.id}  title={item.title} text={item.text} color={item.color} />
+        return <section id={"#Section" + i}><ProjectContainer key={item.id} id={item.id}  title={item.title} text={item.text} color={item.color} /></section>
+      
       }, this)
+      //this.licznik(this.state.licznik+1)
+
     }else
     {
       return <li className="list-group-item list-group-item-action">Ładowanie..</li>

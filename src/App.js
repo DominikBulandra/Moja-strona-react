@@ -1,6 +1,7 @@
 import * as React from "react";
 import logo from './logo.svg';
 import './App.css';
+import './style.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,7 +15,8 @@ import Admin from './Admin';
 import { connect } from "react-redux";
 import { postsFetched,getAllStatPostsAction,getAllStatPostsImages } from "./config/actions/index";
 import {fire  , base, storage}  from './config/Fire';
-
+import { Link2, animateScroll as scroll } from "react-scroll";
+import { ProjectContainer } from "./Project";
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -220,12 +222,15 @@ this.onPush();
       <Router>
       
       <header className="App-header">
-      <ul>
+      <ul className="ButtonUl">
             <li>
-              <Link to="/projects">Projekty</Link>
+              <Link className="button" to="/projects">Projekty</Link>
             </li>
             <li>
-              <Link to="/about">o mnie</Link>
+              <Link  className="button" to="/about">o mnie</Link>
+            </li>
+            <li>
+            <button onClick={()=>{ window.scrollTo(0, 300);;}}>scrool</button>
             </li>
            
             {/* <li>
@@ -238,11 +243,13 @@ this.onPush();
          
         
       </header>
+      <div className="Router">
       <Route exact path="/projects" component={ProjectsContainer}/>
       <Route path="/about" component={About} />
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin" component={Admin} /> 
+      </div>
       </Router>
-     
+      
     </div>
     
   );

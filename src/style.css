@@ -1,0 +1,40 @@
+.button {
+  cursor: pointer;
+  border-radius: 20px;
+  border: 0px solid #1a202c;
+
+  min-width: 64px;
+color: #fa8500;
+  background: transparent;
+
+  transition: all 0.1s ease-in;
+}
+
+.button:hover {
+  background: #fa8500;
+  color: #ffffff;
+  text-decoration: none;
+}
+.images{
+  width: 600px;
+  opacity: 80%;
+}
+.images:hover{
+  opacity: 100%;
+  transition: all 0.2s ease-in;
+}
+.App-header{
+  background-color: rgb(1, 17, 34);
+  position: fixed; /* Set the navbar to fixed position */
+  width: 100%;
+  top: 0;
+ 
+  z-index: 1;
+}
+.ButtonUl{
+  background-color: transparent;
+  margin-bottom: 0rem;
+}
+.Router{
+  margin-top: 10vh;
+}
