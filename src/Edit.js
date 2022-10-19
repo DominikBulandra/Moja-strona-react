@@ -89,6 +89,15 @@ handleChangeColor(e){
  
 
 }
+
+deletePost =() =>{
+  const databaseRef = fire.database().ref('posts/'+this.props.location.id).remove().then(() => {
+    console.log("plik usuniety");
+  }).catch((error) => {
+   console.log("bład:"+error);
+  });
+
+}
 delete = (id,name)=>{
 
  // var desertRef = storage.child('images/1576580858304/images.png');
@@ -202,6 +211,7 @@ componentDidUpdate(){
         
 
       
+        <button onClick={this.deletePost} style={{marginLeft: '25px'}} className="btn btn-success">Usuń</button>
         <button onClick={this.update} style={{marginLeft: '25px'}} className="btn btn-success">Zmień</button>
    </form>
    

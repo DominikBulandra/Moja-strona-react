@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {ProjectsContainer} from './projects';
+import {ButtonsComponent} from './buttonsNav';
 import About from './about';
 import Chat from './Chat';
 import Admin from './Admin';
@@ -20,6 +21,7 @@ import { ProjectContainer } from "./Project";
 export class App extends React.Component {
   constructor(props) {
     super(props);
+   
     this.sendState = this.sendState.bind(this);
     this.onSync = this.onSync.bind(this);
     this.onPush = this.onPush.bind(this);
@@ -45,6 +47,8 @@ export class App extends React.Component {
       
     
    //await this.sendState();
+
+  
   this.onSync();
   this.onAction();
  //console.log(this.props);
@@ -218,10 +222,11 @@ this.onPush();
    }
    
   return (
-    <div className="App">
+    <div className="App" >
       <Router>
       
       <header className="App-header">
+     
       <ul className="ButtonUl">
             <li>
               <Link className="button" to="/projects">Projekty</Link>
@@ -230,8 +235,10 @@ this.onPush();
               <Link  className="button" to="/about">o mnie</Link>
             </li>
             <li>
-            <button onClick={()=>{ window.scrollTo(0, 300);;}}>scrool</button>
+            {/* <button onClick={()=>{ window.scrollTo(0, 300);;}}>scrool</button>
+            <button onClick={this.elScroll.executeScroll}>Click to scroll </button> */}
             </li>
+            
            
             {/* <li>
             <button onClick={this.onSync}>sync</button>
@@ -249,12 +256,14 @@ this.onPush();
       <Route path="/admin" component={Admin} /> 
       </div>
       </Router>
-      
+      <div>Dominik Bulandra 2022</div>
     </div>
+    
     
   );
   }
 }
+
 const mapStateToProps = (state) => {
   
   return {

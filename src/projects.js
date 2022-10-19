@@ -145,7 +145,7 @@ componentDidUpdate(){
              
              
           </ul>
-           <button onClick={this.onLog}>Log</button></div>
+           </div>
       )
   }
 }
